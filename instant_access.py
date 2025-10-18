@@ -194,6 +194,10 @@ SETUP_TEMPLATE = '''
                         <div>Total Grants</div>
                     </div>
                     <div class="stat-card">
+                        <div class="stat-number">{{ config.pending_roles }}</div>
+                        <div>Pending Roles</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-number">{{ '🟢 Live' if config.listening else '🔴 Stopped' }}</div>
                         <div>Status</div>
                     </div>
@@ -549,7 +553,8 @@ def dashboard():
         'listening': config.get('listening', False),
         'grants_today': config.get('grants_today', 0),
         'total_grants': len(load_grants()),
-        'webhook_url': webhook_url
+        'webhook_url': webhook_url,
+        'pending_roles': len(load_role_queue())
     }
     
     connect_url = request.host_url + 'connect-discord'
@@ -642,7 +647,16 @@ def webhook():
     if not config.get('listening'):
         return '', 503
     
-    # Simple verification (add HMAC later)
+    # Enforce HMAC if secret configured (Shopify: X-Shopify-Hmac-Sha256; Whop: X-Whop-Signature)
+    if config.get('webhook_secret'):
+        signature = request.headers.get('X-Shopify-Hmac-Sha256') or request.headers.get('X-Whop-Signature')
+        if not signature:
+            return '', 401
+        expected = hmac.new(config['webhook_secret'].encode(), request.get_data(), hashlib.sha256).hexdigest()
+        valid = (signature == f'sha256={expected}') or (signature == expected)
+        if not valid:
+            return '', 401
+
     data = request.json or request.form.to_dict()
     
     # Extract customer info (works for Shopify/Whop)
