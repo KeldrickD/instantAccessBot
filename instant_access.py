@@ -160,6 +160,12 @@ SETUP_TEMPLATE = '''
         .stat-card { background: #f9fafb; padding: 20px; border-radius: 8px; text-align: center; }
         .stat-number { font-size: 2em; font-weight: bold; color: #10b981; }
         .upgrade-cta { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; text-align: center; padding: 20px; }
+        .grants-table { margin-top: 30px; }
+        .grants-table table { width: 100%; border-collapse: collapse; }
+        .grants-table th, .grants-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        .grants-table th { background: #f3f4f6; font-weight: 600; }
+        .grants-table tr:hover { background: #f9fafb; }
+        @media (max-width: 600px) { .grants-table th, .grants-table td { font-size: 14px; padding: 8px; } }
     </style>
     </head>
 <body>
@@ -198,6 +204,34 @@ SETUP_TEMPLATE = '''
                     <p><strong>Customer Connect URL:</strong> <code style="background: #f3f4f6; padding: 4px 8px; border-radius: 4px;">{{ connect_url }}</code></p>
                     <button class="btn" onclick="testWebhook()">🧪 Test with Fake Sale</button>
                     <button class="btn btn-danger" onclick="stopBot()">🛑 Stop Bot</button>
+                </div>
+
+                <div class="grants-table">
+                    <h3>Recent Grants</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Email</th>
+                                <th>Product</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for grant in grants|sort(attribute='timestamp', reverse=True)|slice(0, 10) %}
+                                <tr>
+                                    <td>{{ grant.timestamp[:19] }}</td>
+                                    <td>{{ grant.email }}</td>
+                                    <td>{{ grant.product }}</td>
+                                    <td>{{ '✅ Success' if grant.success else '❌ Failed' }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" style="color:#6b7280;">No grants yet. Run a test above.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             {% else %}
                 <form method="POST">
@@ -519,7 +553,8 @@ def dashboard():
     }
     
     connect_url = request.host_url + 'connect-discord'
-    return render_template_string(SETUP_TEMPLATE, config=stats, webhook_url=webhook_url, connect_url=connect_url)
+    grants = load_grants()
+    return render_template_string(SETUP_TEMPLATE, config=stats, webhook_url=webhook_url, connect_url=connect_url, grants=grants)
 
 @app.route('/app', methods=['GET', 'POST'])
 def dashboard_alias():
