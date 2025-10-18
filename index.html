@@ -233,6 +233,235 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InstantAccess Bot - Paid? Access Granted.</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Inter, -apple-system, sans-serif; background: #FAFAFA; color: #1E1E1E; }
+        header { position: sticky; top: 0; background: rgba(250, 250, 250, 0.7); backdrop-filter: blur(10px); border-bottom: 1px solid #E1E4E8; z-index: 30; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+        .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+        .logo { display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: #3BE37F; color: white; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; }
+        .logo-text { font-size: 18px; font-weight: 600; }
+        .logo-badge { background: #E8FFF1; color: #3BE37F; padding: 2px 8px; border-radius: 12px; font-size: 12px; }
+        .nav-links { display: none; gap: 24px; font-size: 14px; color: #707580; }
+        .nav-links a:hover { color: #1E1E1E; }
+        .nav-cta { display: flex; gap: 12px; }
+        .btn { padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; }
+        .btn-secondary { border: 1px solid #E1E4E8; color: #1E1E1E; }
+        .btn-primary { background: #3BE37F; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .btn-primary:hover { background: #059669; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .hero { padding: 64px 16px; display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; }
+        .hero h1 { font-size: 2.5em; font-weight: 600; line-height: 1.2; }
+        .hero h1 span { color: #337DFF; }
+        .hero p { font-size: 18px; color: #707580; margin: 16px 0; }
+        .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+        .hero-meta { font-size: 14px; color: #707580; margin-top: 16px; }
+        .hero-image { background: white; border: 1px solid #E1E4E8; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .status-chip { display: flex; align-items: center; gap: 8px; padding: 8px; background: #E8FFF1; border-radius: 8px; }
+        .status-chip span { font-size: 14px; font-weight: 500; color: #3BE37F; }
+        .integrations, .features, .how, .pricing, .faq { padding: 48px 16px; }
+        .integrations p { font-size: 12px; text-transform: uppercase; color: #707580; margin-bottom: 16px; }
+        .integrations-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+        .integration { padding: 8px 16px; background: white; border: 1px solid #E1E4E8; border-radius: 8px; font-size: 14px; color: #707580; }
+        .features-grid, .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        .feature, .how-step { background: white; border: 1px solid #E1E4E8; border-radius: 12px; padding: 24px; }
+        .feature h3, .how-step h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .feature p, .how-step p { font-size: 14px; color: #707580; }
+        .how-step div { color: #337DFF; font-weight: 600; }
+        .pricing h2, .faq h2 { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        .pricing-card { background: white; border: 1px solid #E1E4E8; border-radius: 12px; padding: 24px; text-align: center; }
+        .pricing-card.popular { border-color: #3BE37F; box-shadow: 0 0 0 2px #3BE37F; }
+        .pricing-card h3 { font-size: 14px; color: #707580; }
+        .pricing-card h4 { font-size: 28px; font-weight: 600; margin: 8px 0; }
+        .pricing-card ul { list-style: disc; text-align: left; margin: 16px 0; padding-left: 24px; font-size: 14px; color: #707580; }
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        footer { border-top: 1px solid #E1E4E8; padding: 32px 16px; }
+        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+        .footer-links a { color: #707580; font-size: 14px; margin-left: 16px; }
+        @media (min-width: 768px) { .hero { grid-template-columns: 1fr 1fr; } .nav-links { display: flex; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">InstantAccess</span>
+                <span class="logo-badge">Bot</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how">How it works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <div class="nav-cta">
+                <a href="https://github.com/KeldrickD/instantAccessBot" class="btn btn-secondary">Docs</a>
+                <a href="/app" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="container">
+            <div>
+                <h1>Paid? <span>Access granted.</span></h1>
+                <p>InstantAccess Bot auto-grants Discord roles or sends welcome emails the moment a sale hits. No manual work. Just relief.</p>
+                <div class="hero-cta">
+                    <a href="/app" class="btn btn-primary">Get Started</a>
+                    <a href="https://github.com/KeldrickD/instantAccessBot" class="btn btn-secondary">Watch 60-sec Demo</a>
+                </div>
+                <div class="hero-meta">Free tier • Setup in 2 minutes • No coding needed</div>
+            </div>
+            <div class="hero-image">
+                <div class="status-chip">
+                    <span class="logo-icon">✅</span>
+                    <span>Listening...</span>
+                </div>
+                <div style="margin-top: 16px; font-size: 14px; color: #707580;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Webhook received</span>
+                        <span>2s ago</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Granting Discord role</span>
+                        <span>1s ago</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: 600;">
+                        <span>Access granted ✅</span>
+                        <span>Just now</span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" style="width: 100%; margin-top: 16px;">Run Test Ping</button>
+            </div>
+        </div>
+    </section>
+    <section class="integrations">
+        <div class="container">
+            <p>Works with</p>
+            <div class="integrations-grid">
+                <span class="integration">Shopify</span>
+                <span class="integration">Whop</span>
+                <span class="integration">Stripe</span>
+                <span class="integration">Discord</span>
+                <span class="integration">SendGrid</span>
+            </div>
+        </div>
+    </section>
+    <section class="features" id="features">
+        <div class="container">
+            <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 24px;">Why Creators Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>QuickConnect</h3>
+                    <p>Paste your keys once and go live. No YAML, no hassle.</p>
+                </div>
+                <div class="feature">
+                    <h3>Live Mode</h3>
+                    <p>Webhook hits → access granted. See status updates instantly.</p>
+                </div>
+                <div class="feature">
+                    <h3>Test Ping</h3>
+                    <p>Simulate a sale with one click to feel the magic.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="how" id="how">
+        <div class="container">
+            <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 24px;">How it Works</h2>
+            <div class="how-grid">
+                <div class="how-step">
+                    <div>01</div>
+                    <h3>Connect</h3>
+                    <p>Authorize Discord and add your Shopify/Whop webhook secret.</p>
+                </div>
+                <div class="how-step">
+                    <div>02</div>
+                    <h3>Choose Action</h3>
+                    <p>Auto-grant a Discord role or send a welcome email.</p>
+                </div>
+                <div class="how-step">
+                    <div>03</div>
+                    <h3>Go Live</h3>
+                    <p>Start the bot. Buyers get instant access; you save time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Pricing</h2>
+            <p style="color: #707580; margin-bottom: 24px;">Simple plans. Cancel anytime.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <h4>$0/mo</h4>
+                    <ul>
+                        <li>100 grants/month</li>
+                        <li>1 webhook</li>
+                        <li>Discord or email</li>
+                    </ul>
+                    <a href="/app" class="btn btn-primary">Start Free</a>
+                </div>
+                <div class="pricing-card popular">
+                    <h3>Pro</h3>
+                    <h4>$9/mo</h4>
+                    <ul>
+                        <li>Unlimited grants</li>
+                        <li>Shopify + Whop support</li>
+                        <li>Custom email templates</li>
+                    </ul>
+                    <a href="/app" class="btn btn-primary">Get Pro</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>FAQ</h2>
+            <div class="faq-grid">
+                <div class="feature">
+                    <h3>Do I need coding skills?</h3>
+                    <p>No. Setup takes 2 minutes with our guided form.</p>
+                </div>
+                <div class="feature">
+                    <h3>What platforms are supported?</h3>
+                    <p>Shopify, Whop, Stripe webhooks; Discord roles or SendGrid emails.</p>
+                </div>
+                <div class="feature">
+                    <h3>Can I try it first?</h3>
+                    <p>Yes. The free tier lets you test with 100 grants/month.</p>
+                </div>
+                <div class="feature">
+                    <h3>Refunds?</h3>
+                    <p>14-day money-back guarantee if it doesn’t meet your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span>InstantAccess</span>
+                <span style="color: #707580; margin-left: 8px;">© 2025</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/KeldrickD/instantAccessBot">Docs</a>
+                <a href="https://github.com/KeldrickD/instantAccessBot/blob/main/LICENSE">License</a>
+                <a href="mailto:support@instantaccessbot.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstantAccess Bot - Paid? Access Granted.</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
