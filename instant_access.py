@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request, render_template_string, redirect, url_for, flash, session
+from flask import Flask, request, render_template_string, redirect, url_for, flash, session, send_from_directory
 from werkzeug.utils import secure_filename
 import requests
 import smtplib
@@ -562,8 +562,13 @@ def dashboard():
     return render_template_string(SETUP_TEMPLATE, config=stats, webhook_url=webhook_url, connect_url=connect_url, grants=grants)
 
 @app.route('/')
-def root_index():
-    return redirect('/index.html')
+def serve_root():
+    return send_from_directory('.', 'index.html')
+
+@app.route('/index.html')
+def serve_index_html():
+    return send_from_directory('.', 'index.html')
+
 
 
 # Customer OAuth connect (buyer)
