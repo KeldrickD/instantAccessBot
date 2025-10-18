@@ -1,0 +1,18 @@
+{
+  "framework": "flask",
+  "installCommand": "pip install -r requirements.txt",
+  "buildCommand": "echo 'No build step needed'",
+  "routes": [
+    { "src": "/$", "dest": "/index.html" },
+    { "src": "/app(.*)", "dest": "/" },
+    { "src": "/webhook", "dest": "/" },
+    { "src": "/connect-discord", "dest": "/" },
+    { "src": "/discord-callback", "dest": "/" },
+    { "src": "/test-webhook", "dest": "/" },
+    { "src": "/create-checkout", "dest": "/" },
+    { "src": "/success", "dest": "/" },
+    { "src": "/cancel", "dest": "/" },
+    { "src": "/cron/process-queue", "dest": "/" }
+  ]
+}
+
