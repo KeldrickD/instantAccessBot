@@ -518,7 +518,7 @@ SETUP_TEMPLATE = '''
 </html>
 '''
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/app', methods=['GET', 'POST'])
 def dashboard():
     config = load_config()
     
@@ -561,9 +561,10 @@ def dashboard():
     grants = load_grants()
     return render_template_string(SETUP_TEMPLATE, config=stats, webhook_url=webhook_url, connect_url=connect_url, grants=grants)
 
-@app.route('/app', methods=['GET', 'POST'])
-def dashboard_alias():
-    return dashboard()
+@app.route('/')
+def root_index():
+    return redirect('/index.html')
+
 
 # Customer OAuth connect (buyer)
 @app.route('/connect-discord')
